@@ -18,54 +18,50 @@
  * |                                                                           |
  * | History:                                                                  |
  * |   Dec 12, 2013 - inital version                                           |
+ * |   Dec 12, 2013 - optimized                                                |
  * |                                                                           |
  * +---------------------------------------------------------------------------+
  */
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
 
-/* define our DEBUG macro as false if we are not in debug mode */
-#ifndef DEBUG
-#define DEBUG 0
-#endif
-
-/* the base numbers to obtain multiples from */
-#define MULT_A 3
-#define MULT_B 5
-
-/* the max number that the multiples cannot exceed */
+/* max number that multiples cannot exceed */
 #define MAX 1000
 
-int main() {
-	int sum = 0;   /* running total */
-	int count = 0; /* iteration count (testing) */
+/* number of different multiples */
+#define NUM 2
 
-	int mult_a = 0;
-	int mult_b = 0;
+int indiv_sum(int mult) {
+	/* calc iterations needed */
+	int iters = MAX/mult;
+	if(MAX % mult == 0)
+		iters--;
 
-	/* calculate min number of iterations needed */
-	int iters = (MAX/fmin(MULT_A, MULT_B)) + 1;
-	
-	if(DEBUG)
-		printf("iters: %d\n", iters);
+	int mult_sum = 0;     /* start at 0 to simplify loop */
+	int sum = 0;
+
+	printf("%d iters: %d\n", mult, iters);
 
 	for(int i = 0; i < iters; i++) {
-		if(DEBUG)
-			count++;
-
-		mult_a += MULT_A;
-		if(mult_a < MAX)
-			sum += mult_a;
-
-		mult_b += MULT_B;
-		if(mult_b < MAX)
-			sum += mult_b;
+		mult_sum += mult;
+		printf("\t%d\n", mult_sum);
+		sum += mult_sum;
+		printf("\t\trunning sum: %d\n", sum);
 	}
 
-	if(DEBUG)
-		printf("count: %d\n", count);
+	printf("%d sum: %d\n", mult, sum);
+
+	return sum;
+}
+
+int main() {
+	int sum = 0;
+	int mults[NUM] = {3, 5};
+	
+	/* sum each number individually */
+	for(int i = 0; i < NUM; i++)
+		sum += indiv_sum(mults[i]);
 
 	printf("sum: %d\n", sum);
 }
