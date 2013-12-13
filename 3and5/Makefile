@@ -1,8 +1,10 @@
-3and5 : 3and5.c
-	gcc -o 3and5 -Wall -std=c99 3and5.c
+name = 3and5
 
-debug : 3and5.c
-	gcc -o 3and5 -Wall -std=c99 3and5.c -g -DDEBUG=1
+$(name) : $(name).c
+	gcc -o $(name) -Wall -std=c99 $(name).c
 
-clean : 3and5
-	rm ./3and5
+debug : $(name).c
+	gcc -o $(name) -Wall -std=c99 $(name).c -g -DDEBUG=1
+
+clean : $(name)
+	rm ./$(name)
