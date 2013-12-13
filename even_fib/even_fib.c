@@ -15,7 +15,8 @@
  *   exceed four million, find the sum of the even-valued terms."
  *
  * History:
- *   Dec 12, 2013 - initial version
+ *   Dec 12, 2013 - initial version (works)
+ *   Dec 12, 2013 - optimize: remove mod
  *
  * -----------------------------------------------------------------------------
  */
@@ -23,44 +24,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#ifndef DEBUG
-#define DEBUG 0
-#endif
-
-#define MAX 4000000 /* four million */
-
 int main() {
-	int sum  = 0;
-	int fib1 = 1;
-	int fib2 = 2;
+	int fib1=1, fib2=2, sum=0, max=4000000;
+	char m=1;
 
-	while(1) {
-		if(DEBUG)
-			printf("fib: %d\n", fib1);
-
-		if(fib1 > MAX)
-			break;
-		if(fib1 % 2 == 0) {
-			if(DEBUG)
-				printf("\tdiv by 2\n");
+	while(fib1 <= max && fib2 <= max) {
+		if( (fib1 & m) == 0)
 			sum += fib1;
-		}
 		fib1 += fib2;
 
-		if(DEBUG)
-			printf("fib: %d\n", fib2);
-
-		if(fib2 > MAX)
-			break;
-		if(fib2 % 2 == 0) {
-			if(DEBUG)
-				printf("\tdiv by 2\n");
+		if( (fib2 & m) == 0)
 			sum += fib2;
-		}
 		fib2 += fib1;
 	}
-
-	printf("even sum: %d\n", sum);
+	printf("sum: %d\n", sum);
 
 	return 0;
 }
